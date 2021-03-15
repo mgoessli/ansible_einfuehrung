@@ -1,0 +1,23 @@
+---
+- hosts: all
+  vars:
+    serverhome: /J2EE/home/was/kfranken/server
+  tasks:
+  - file:
+      path: "{{serverhome}}/datei1"
+      state: touch
+  - file:
+      path: "{{serverhome}}/datei2"
+      state: touch
+  - file:
+      path: "{{serverhome}}/datei3"
+      state: touch
+  - name: better with a loop
+    file:
+      path: "{{serverhome}}/datei{{item}}"
+      state: touch
+    loop:
+    - 1
+    - 2
+    - 3
+

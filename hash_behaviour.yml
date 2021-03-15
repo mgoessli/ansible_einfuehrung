@@ -1,0 +1,9 @@
+---
+- hosts: all
+  vars:
+    x:
+      y: Y
+  tasks:
+  - debug:
+      var: x
+

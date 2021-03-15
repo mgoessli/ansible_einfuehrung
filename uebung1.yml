@@ -1,0 +1,30 @@
+---
+- hosts: kfranken
+  become: True
+  vars:
+    serverhome: /var/www/html
+    username: "Hans Mustermann"
+    users:
+      - vorname: "Hans"
+        nachname: "Mustermann"
+      - vorname: "Erika"
+        nachname: "Musterfrau"
+  tasks:
+    - ping:
+    - command: id
+    - package:
+        name: httpd
+        state: installed
+    - service:
+        name: httpd
+        state: started
+    - name: userseite
+      template:
+        src: uebung1.j2
+        dest: "{{serverhome}}/{{users[0].nachname}}.html"
+    - name: index.html
+      template:
+        src: uebung1-index.j2
+        dest: "{{serverhome}}/index.html"
+    - set_fact:
+        tmpl: "{{ lookup('template', 'templates/uebung1.j2') }}"

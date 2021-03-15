@@ -1,0 +1,10 @@
+---
+- hosts: nodes 
+  tasks:
+    - name: test connection
+      ping:
+    - command: id
+      changed_when: False
+      tags: thomas
+    - debug:
+        var: password
