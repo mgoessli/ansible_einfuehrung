@@ -1,0 +1,13 @@
+---
+- hosts: nodes 
+  tasks:
+    - name: test connection
+      ping:
+    - command: id
+      register: id 
+      changed_when: False
+    - command: uname -n
+      register: uname
+      changed_when: False
+    - debug: msg=" {{ id.stdout }} " 
+    - debug: msg=" {{ uname.stdout }} "

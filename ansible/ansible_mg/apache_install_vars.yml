@@ -1,0 +1,39 @@
+---
+- hosts: mgoessling 
+  vars:
+     serverhome: /var/www/html
+     users: 
+        - vorname: "Hans"
+          nachname: "Mustermann"
+        - vorname: "Erika"
+          nachname: "Muster"
+  tasks:
+    - name: test connection
+      ping:
+    - command: id
+      register: id 
+      changed_when: False
+    - command: uname -n
+      register: uname
+      changed_when: False
+    - name: check_httpd
+      shell: " ps -ef | grep httpd "
+      register: httpd_check
+      changed_when: False
+    - name: Install_httpd
+      shell: " sudo yum -y install httpd "
+    - name: userseite
+      template:
+         src: uebung1.j2
+         dest: "/J2EE/home/was/{{users[0].nachname}}.html "
+    #- name: kopieren
+    #  shell: " sudo cp /J2EE/home/was2/{{users[0].nachname}}.html  {{serverhome}}/{{users[0].nachname}}.html "
+    - debug: msg=" {{ id.stdout }} " 
+    - debug: msg=" {{ uname.stdout }} "
+    - debug: 
+        msg: " {{  uname.stdout }} "
+    - debug: 
+        msg: " {{ httpd_check.stdout }} "
+  #  - debug:
+  #      msg: " {{ service.stout }} "
+  #         msg: "tout

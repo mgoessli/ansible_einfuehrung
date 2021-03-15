@@ -1,0 +1,37 @@
+---
+- hosts: nodes 
+  tasks:
+    - name: test connection
+      ping:
+    - command: id
+      register: id 
+      changed_when: False
+    - command: uname -n
+      register: uname
+      changed_when: False
+    - name: ich
+      shell: " ps -ef | grep $USER | tail -1 "
+      register: ich
+      changed_when: false
+    - name: check_httpd
+      shell: " ps -ef | grep httpd "
+      register: httpd_check
+      changed_when: False
+    # - package:
+    #    name: httpd
+    #    state: installe
+    #    register: package
+  #  - service:
+  #       name: httpd
+  #       state: start
+  #       register: service
+    - debug: msg=" {{ id.stdout }} " 
+    - debug: msg=" {{ uname.stdout }} "
+    - debug: 
+        msg: " {{  uname.stdout }} "
+    - debug: 
+        msg: " {{ httpd_check.stdout }} "
+  #  - debug:
+  #      msg: " {{ service }} "
+    - debug:
+        msg: " {{ ich }} "
